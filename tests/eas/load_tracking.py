@@ -252,7 +252,7 @@ class FreqInvarianceTest(_LoadTrackingBase):
         for freq in cls.freqs:
             confs.append({
                 'tag' : 'freq_{}'.format(freq),
-                'flags' : ['ftrace', 'freeze_userspace'],
+                'flags' : 'ftrace',
                 'cpufreq' : {
                     'freqs' : {cpu: freq},
                     'governor' : 'userspace',
@@ -336,7 +336,7 @@ class CpuInvarianceTest(_LoadTrackingBase):
 
         conf = {
             'tag' : 'cie_conf',
-            'flags' : ['ftrace', 'freeze_userspace'],
+            'flags' : 'ftrace',
             'cpufreq' : {'governor' : 'performance'},
         }
 
@@ -409,7 +409,7 @@ class PELTTasksTest(_LoadTrackingBase):
 
         conf = {
             'tag' : 'pelt_behv_conf',
-            'flags' : ['ftrace', 'freeze_userspace'],
+            'flags' : 'ftrace',
             'cpufreq' : {'governor' : 'performance'},
         }
 
@@ -840,7 +840,7 @@ class OneTaskCPUMigrationTest(_CPUMigrationBase):
         wload = cls.get_wload(test_env, tasks, 'cpu_migration0')
         conf = {
             'tag' : 'cpu_migration_one_task',
-            'flags' : ['ftrace', 'freeze_userspace'],
+            'flags' : 'ftrace',
             'cpufreq' : {'governor' : 'performance'},
         }
 
@@ -904,7 +904,7 @@ class TwoTasksCPUMigrationTest(_CPUMigrationBase):
         wload = cls.get_wload(test_env, tasks, 'cpu_migration1')
         conf = {
             'tag' : 'cpu_migration_two_tasks',
-            'flags' : ['ftrace', 'freeze_userspace'],
+            'flags' : 'ftrace',
             'cpufreq' : {'governor' : 'performance'},
         }
 
@@ -973,12 +973,6 @@ class _PELTTaskGroupsTest(LisaTest):
         for se in cls.root_group.iter_nodes():
             if se.is_task:
                 max_duration = max(max_duration, se.duration_s)
-
-        # Freeze userspace tasks
-        cls._log.info('Freezing userspace tasks')
-        with te.freeze_userspace():
-            cls._log.info('FTrace events collection enabled')
-            te.ftrace.start()
 
             # Run tasks
             cls._log.info('Running the tasks')
@@ -1147,7 +1141,7 @@ class TwoGroupsCascade(_PELTTaskGroupsTest):
 
         conf = {
             'tag' : 'cgp_cascade',
-            'flags' : ['ftrace', 'freeze_userspace'],
+            'flags' : 'ftrace',
             'cpufreq' : {'governor' : 'performance'},
         }
 
@@ -1247,7 +1241,7 @@ class UnbalancedHierarchy(_PELTTaskGroupsTest):
 
         conf = {
             'tag' : 'cgp_unbalanced',
-            'flags' : ['ftrace', 'freeze_userspace'],
+            'flags' : 'ftrace',
             'cpufreq' : {'governor' : 'performance'},
         }
 
@@ -1349,7 +1343,7 @@ class CgroupsMigrationTest(_PELTTaskGroupsTest):
 
         conf = {
             'tag' : 'cgp_migration',
-            'flags' : ['ftrace', 'freeze_userspace'],
+            'flags' : 'ftrace',
             'cpufreq' : {'governor' : 'performance'},
         }
 
@@ -1451,7 +1445,7 @@ class NestedCgroupsMigrationTest(_PELTTaskGroupsTest):
 
         conf = {
             'tag' : 'nested_cgp_migration',
-            'flags' : ['ftrace', 'freeze_userspace'],
+            'flags' : 'ftrace',
             'cpufreq' : {'governor' : 'performance'},
         }
 
